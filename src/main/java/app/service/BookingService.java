@@ -21,7 +21,8 @@ public class BookingService {
         try{
             Flight flight = flightDao.getByID(ID);
             flight.setFreeSeats(flight.getFreeSeats() - passengers.size());
-            bookingDao.add(new Booking(getAllBooking().size(), flight, passengers));
+            Booking booking = new Booking(getAllBooking().size(), flight, passengers);
+            bookingDao.add(booking);
             return "Your booking has been completed successfully. See you on flight day <3! \n";
         }
         catch (Exception e){
@@ -38,8 +39,8 @@ public class BookingService {
         return bookingDao.getByID(id);
     }
 
-    public void saveBooking(Booking booking) {
-        bookingDao.save(booking);
+    public void saveBooking() {
+        bookingDao.save();
     }
 
     public boolean deleteBooking(Booking booking) {

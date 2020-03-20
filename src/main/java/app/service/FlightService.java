@@ -31,8 +31,8 @@ public class FlightService {
         return flightDao.getByID(id);
     }
 
-    public void saveFlight(Flight flight) {
-        flightDao.save(flight);
+    public void saveFlight() {
+        flightDao.save();
     }
 
     public boolean deleteFlight(Flight flight) {

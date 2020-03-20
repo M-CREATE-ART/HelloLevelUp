@@ -21,8 +21,8 @@ public class FlightController {
         return flightService.getFlightsByID(id);
     }
 
-    public void saveFlight(Flight flight) {
-        flightService.saveFlight(flight);
+    public void saveFlight() {
+        flightService.saveFlight();
     }
 
     public boolean deleteFlight(Flight flight) {
@@ -31,5 +31,21 @@ public class FlightController {
 
     public void generateFlight() {
         flightService.generateFlight();
+    }
+
+    public String getCurrentDayFlights() {
+        return flightService.getCurrentDayFlights();
+    }
+
+    public void getfromDB() {
+        flightService.getfromDB();
+    }
+
+    public String showFlightInfo(int ID) {
+        return flightService.showFlightInfo(ID);
+    }
+
+    public String getFilteredFlights(String destination, String date, int passengers) {
+        return flightService.getFilteredFlights(destination, date, passengers);
     }
 }
