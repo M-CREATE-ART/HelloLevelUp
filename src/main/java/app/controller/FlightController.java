@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.database.Airport;
 import app.entities.Flight;
 import app.service.FlightService;
 
@@ -8,23 +9,27 @@ import java.util.Collection;
 public class FlightController {
     FlightService flightService = new FlightService();
 
-    public void add(Flight flight) {
-        flightService.add(flight);
+    public void addFlight(Airport destination, String Date, int seats) {
+        flightService.addFlight(destination, Date, seats);
     }
 
-    public Collection<Flight> getAll() {
-        return flightService.getAll();
+    public Collection<Flight> getAllFlights() {
+        return flightService.getAllFlights();
     }
 
-    public Flight getByID(int id) {
-        return flightService.getByID(id);
+    public Flight getFlightsByID(int id) {
+        return flightService.getFlightsByID(id);
     }
 
-    public void save(Flight flight) {
-        flightService.save(flight);
+    public void saveFlight(Flight flight) {
+        flightService.saveFlight(flight);
     }
 
-    public boolean delete(Flight flight) {
-        return flightService.delete(flight);
+    public boolean deleteFlight(Flight flight) {
+        return flightService.deleteFlight(flight);
+    }
+
+    public void generateFlight() {
+        flightService.generateFlight();
     }
 }

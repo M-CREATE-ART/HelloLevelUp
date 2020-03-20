@@ -9,6 +9,9 @@ public enum Airport {
 
     private String code;
 
+    public String getCode() {
+        return code;
+    }
 
     Airport(String code) {
         this.code = code;

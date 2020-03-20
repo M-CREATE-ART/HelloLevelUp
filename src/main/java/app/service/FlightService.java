@@ -1,6 +1,7 @@
 package app.service;
 
 import app.dao.FlightDao;
+import app.database.Airport;
 import app.entities.Flight;
 import app.util.Tools;
 
@@ -8,6 +9,8 @@ import javax.annotation.processing.Filer;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,23 +19,23 @@ import java.util.stream.Collectors;
 public class FlightService {
     FlightDao flightDao = new FlightDao();
 
-    public void add(Flight flight) {
-        flightDao.add(flight);
+    public void addFlight(Airport destination, String Date, int seats) {
+        flightDao.add(new Flight(getAllFlights().size()+1, destination, Date, seats, seats));
     }
 
-    public Collection<Flight> getAll() {
+    public Collection<Flight> getAllFlights() {
         return flightDao.getAll();
     }
 
-    public Flight getByID(int id) {
+    public Flight getFlightsByID(int id) {
         return flightDao.getByID(id);
     }
 
-    public void save(Flight flight) {
+    public void saveFlight(Flight flight) {
         flightDao.save(flight);
     }
 
-    public boolean delete(Flight flight) {
+    public boolean deleteFlight(Flight flight) {
         return flightDao.delete(flight);
     }
 
@@ -67,4 +70,62 @@ public class FlightService {
         }
 
     }
+
+    public String getCurrentDayFlights() {
+        ArrayList<Flight> currentDayFlights = new ArrayList<>();
+        StringBuilder currentDayFlightString = new StringBuilder();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd|HH:mm");
+        LocalDate currentDate = LocalDate.now().plusDays(1);
+
+        for (Flight flight : flightDao.getAll()) {
+            LocalDate flightDate = LocalDate.parse(flight.getDate(), formatter);
+
+            if (currentDate.getMonth() == flightDate.getMonth() &&
+                    currentDate.getDayOfMonth() >= flightDate.getDayOfMonth()
+            ) currentDayFlights.add(flight);
+
+        }
+
+//        currentDayFlights = flightDao.getAll().stream().map(fl -> {
+//            LocalDate flightDate = LocalDate.parse(fl.getDate(), formatter);
+//
+//            currentDate.getMonth() == flightDate.getMonth() && currentDate.getDayOfMonth() >= flightDate.getDayOfMonth();
+//        }).collect(Collectors.toList());
+
+        currentDayFlights.forEach(flight -> currentDayFlightString.append(flight.represent()));
+        return currentDayFlightString.toString();
+    }
+
+    public void getfromDB() {
+        flightDao.getfromDB();
+    }
+
+    public String showFlightInfo(int ID) {
+        return getFlightsByID(ID).represent();
+    }
+
+    public String getFilteredFlights(String destination, String date, int passengers) {
+        ArrayList<Flight> filteredFlights = new ArrayList<>();
+        StringBuilder fliteredFlightString = new StringBuilder();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy/MM/dd|HH:mm");
+        LocalDate searchDate = LocalDate.parse(date, formatter);
+
+        flightDao.getAll().forEach(flight -> {
+
+            LocalDate flightDate = LocalDate.parse(flight.getDate(), formatter2);
+            if (flight.getDestination() == Airport.valueOf(destination.toUpperCase()) &&
+                    searchDate.getMonth() == flightDate.getMonth() &&
+                    searchDate.getDayOfMonth() == flightDate.getDayOfMonth() &&
+                    flight.getFreeSeats() >= passengers) {
+                filteredFlights.add(flight);
+            }
+        });
+        filteredFlights.forEach(sf -> fliteredFlightString.append(sf.represent()));
+        return fliteredFlightString.toString();
+    }
+
+
 }
+

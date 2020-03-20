@@ -26,6 +26,7 @@ public class Flight {
     }
 
     public String getDate() {
+
         return date;
     }
 
@@ -37,8 +38,19 @@ public class Flight {
         return freeSeats;
     }
 
+    public void setFreeSeats(int freeSeats) {
+        this.freeSeats = freeSeats;
+    }
+
+    public String represent() {
+        return String.format("Booking ID: %d FROM 'KYIV (KBP)' TO: '%s (%s)' Flight date: '%s' Total seats: '%d' Free seats: '%d'\n",
+                ID, destination.name(), destination.getCode(), date, seats, freeSeats);
+    }
+
     @Override
     public String toString() {
         return String.format("%d %s %s %d %d", ID, destination, date, seats, freeSeats);
     }
+
+
 }

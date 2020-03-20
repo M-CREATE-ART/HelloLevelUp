@@ -1,30 +1,33 @@
 package app.controller;
 
 import app.entities.Booking;
+import app.entities.Flight;
+import app.entities.Person;
 import app.service.BookingService;
 
 import java.util.Collection;
+import java.util.List;
 
 public class BookingController {
     BookingService bookingService = new BookingService();
 
-    public void add(Booking booking) {
-        bookingService.add(booking);
+    public void addBooking(Flight flight, List<Person> passengers) {
+        bookingService.addBooking(flight, passengers);
     }
 
-    public Collection<Booking> getAll() {
-        return bookingService.getAll();
+    public Collection<Booking> getAllBooking() {
+        return bookingService.getAllBooking();
     }
 
-    public Booking getByID(int id) {
-        return bookingService.getByID(id);
+    public Booking getBookingByID(int id) {
+        return bookingService.getBookingByID(id);
     }
 
-    public void save(Booking booking) {
-        bookingService.save(booking);
+    public void saveBooking(Booking booking) {
+        bookingService.saveBooking(booking);
     }
 
-    public boolean delete(Booking booking) {
-        return bookingService.delete(booking);
+    public boolean deleteBooking(Booking booking) {
+        return bookingService.deleteBooking(booking);
     }
 }
