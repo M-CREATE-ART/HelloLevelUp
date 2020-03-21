@@ -20,7 +20,7 @@ public class FlightDao implements dao<Flight> {
     }
 
     @Override
-    public Collection<Flight> getAll() {
+    public List<Flight> getAll() {
         return flights;
     }
 
@@ -66,13 +66,10 @@ public class FlightDao implements dao<Flight> {
 
 
     @Override
-    public boolean delete(Flight flight) {
-        if (flights.contains(flight)) {
-            flights.remove(flight);
-            return true;
-        } else{
-            return false;
-        }
+    public boolean delete(int flightId) {
+        if (flightId > flights.size() || flightId < 0) return false;
+        flights.removeIf(bk -> flightId == bk.getID());
+        return true;
 
     }
 

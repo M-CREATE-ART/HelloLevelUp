@@ -1,10 +1,10 @@
 package app.database;
 
 public enum Airport {
-    KYIV ("KBP"),
+    KYİV ("KBP"),
     ANKARA( "ESB"),
-    SOFIA("SOF"),
-    BAHRAIN("BAH"),
+    SOFİA("SOF"),
+    BAHRAİN("BAH"),
     GANDJA("KVD" );
 
     private String code;

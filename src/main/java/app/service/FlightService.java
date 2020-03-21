@@ -20,10 +20,10 @@ public class FlightService {
     FlightDao flightDao = new FlightDao();
 
     public void addFlight(Airport destination, String Date, int seats) {
-        flightDao.add(new Flight(getAllFlights().size()+1, destination, Date, seats, seats));
+        getAllFlights().add(new Flight(getAllFlights().size()+1, destination, Date, seats, seats));
     }
 
-    public Collection<Flight> getAllFlights() {
+    public List<Flight> getAllFlights() {
         return flightDao.getAll();
     }
 
@@ -35,8 +35,8 @@ public class FlightService {
         flightDao.save();
     }
 
-    public boolean deleteFlight(Flight flight) {
-        return flightDao.delete(flight);
+    public boolean deleteFlight(int flightId) {
+        return flightDao.delete(flightId);
     }
 
     public void generateFlight() {
@@ -49,7 +49,7 @@ public class FlightService {
             if (lineList.size() == 0) {
                 FileWriter fw = new FileWriter(fileName);
 
-                for (Flight flight : Tools.flightGenerator(50)) {
+                for (Flight flight : Tools.generateFlight(50)) {
                     fw.write(flight + System.lineSeparator());
                 }
                 fw.close();
@@ -60,7 +60,7 @@ public class FlightService {
 
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
-                for (Flight flight : Tools.flightGenerator(50)) {
+                for (Flight flight : Tools.generateFlight(50)) {
                     bw.write(flight + System.lineSeparator());
                 }
                 bw.close();

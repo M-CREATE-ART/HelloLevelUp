@@ -5,6 +5,7 @@ import app.entities.Flight;
 import app.service.FlightService;
 
 import java.util.Collection;
+import java.util.List;
 
 public class FlightController {
     FlightService flightService = new FlightService();
@@ -13,7 +14,7 @@ public class FlightController {
         flightService.addFlight(destination, Date, seats);
     }
 
-    public Collection<Flight> getAllFlights() {
+    public List<Flight> getAllFlights() {
         return flightService.getAllFlights();
     }
 
@@ -25,8 +26,8 @@ public class FlightController {
         flightService.saveFlight();
     }
 
-    public boolean deleteFlight(Flight flight) {
-        return flightService.deleteFlight(flight);
+    public boolean deleteFlight(int flightId) {
+        return flightService.deleteFlight(flightId);
     }
 
     public void generateFlight() {
